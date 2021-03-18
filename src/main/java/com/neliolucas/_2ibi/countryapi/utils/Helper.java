@@ -5,9 +5,8 @@ import java.util.logging.Logger;
 
 public class Helper {
 
-    public static String log(Object o, String message) {
-
-        Logger logger = Logger.getLogger(o.getClass().getName());
+    public static String log(Class<?> o, String message) {
+        Logger logger = Logger.getLogger(o.getName());
         logger.log(Level.INFO, message);
         return message;
     }
