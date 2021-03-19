@@ -54,7 +54,7 @@ public class CountryService {
             }
             else
             {
-                Helper.log(this.getClass(),"No changes in country '" + foundCountry.getName()+"'");
+                Helper.log(this.getClass(),"No changes for country '" + foundCountry.getName()+"'");
                 return false;
             }
 

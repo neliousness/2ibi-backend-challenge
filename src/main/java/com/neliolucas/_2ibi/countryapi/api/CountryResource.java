@@ -13,17 +13,13 @@ import java.util.List;
 @RequestMapping("/api")
 public class CountryResource {
 
-    final
+    @Autowired
     CountryService countryService;
-
-    public CountryResource(CountryService countryService) {
-        this.countryService = countryService;
-    }
 
 
     /**
      * Inserts a country entry into database
-     * Ret
+     *
      * @param country request payload contain
      * @return request CREATED or CONFLICT request response with a response body of type String
      */
@@ -50,7 +46,9 @@ public class CountryResource {
     @GetMapping("/country/{id}")
     public ResponseEntity<?> fetchSingleCountry(@PathVariable("id") long id) {
         Country foundCountry = countryService.findById(id);
-        return foundCountry != null ? ResponseEntity.ok().body(foundCountry) : ResponseEntity.ok().body("No country with id '" + id + "' found");
+        return foundCountry != null ?
+                ResponseEntity.status(HttpStatus.FOUND).body(foundCountry) :
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body("No country with id '" + id + "' found");
     }
 
 
@@ -66,7 +64,7 @@ public class CountryResource {
 
         return countryService.update(id, country) ?
                 ResponseEntity.ok().body("Country '" + country.getName() + "' updated") :
-                ResponseEntity.ok().body("No changes in country '" + country.getName() + "' found");
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body("No changes in country '" + country.getName() + "' found");
     }
 
 }

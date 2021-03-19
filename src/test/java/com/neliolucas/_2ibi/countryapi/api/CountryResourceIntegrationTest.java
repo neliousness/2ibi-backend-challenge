@@ -19,17 +19,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(CountryResource.class)
@@ -173,16 +172,59 @@ public class CountryResourceIntegrationTest {
                 .andExpect(jsonPath("$[4].capital",is("Washington DC")));
     }
 
-//    @Test
-//    void fetchSingleCountry() {
-//    }
+    @Test
+    public void fetchSingleCountry() throws Exception {
+        Country alaska = new Country();
+        alaska.setUid(0L);
+        alaska.setName("Alaska");
+        alaska.setArea(1717856);
+        alaska.setCapital("Juneau");
+        alaska.setRegion("America");
+        alaska.setSubRegion("Northwest America");
 
-//    @Test
-//    void delteCountry() {
-//    }
-//
-//    @Test
-//    void updateSingleCountry() {
-//    }
+
+        //when
+        when(countryService.findById(0)).thenReturn(alaska);
+
+        mockMvc.perform(get("/api/country/0")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isFound())
+                .andExpect(content().string(containsString("Alaska")));
+
+    }
+
+    @Test
+    public void deleteCountry() throws Exception {
+        when(countryService.deleteCountry(4L)).thenReturn(true);
+        mockMvc.perform(delete("/api/country/4").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+   public void updateSingleCountry() throws Exception{
+
+        Country alaska = new Country();
+        alaska.setUid(0L);
+        alaska.setName("Alaska");
+        alaska.setArea(1717856);
+        alaska.setCapital("Juneau");
+        alaska.setRegion("America");
+        alaska.setSubRegion("Northwest America");
+
+        Country alaska2 = new Country();
+        alaska2.setUid(0L);
+        alaska2.setName("Alaska");
+        alaska2.setArea(1717856);
+        alaska2.setCapital("Juneauu");
+        alaska2.setRegion("America");
+        alaska2.setSubRegion("Northwest America");
+
+        when(countryService.update(alaska.getUid(),alaska2)).thenReturn(true);
+
+        mockMvc.perform(put("/api/country/"+alaska.getUid()).contentType(MediaType.APPLICATION_JSON)
+                .content(new Gson().toJson(alaska2)))
+                .andExpect(status().isOk());
+    }
 
 }

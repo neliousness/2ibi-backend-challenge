@@ -83,7 +83,6 @@ public class Country {
 
     public void updateCountry(Country country)
     {
-
         this.name = country.getName();
         this.capital = country.getCapital();
         this.region = country.getRegion();
