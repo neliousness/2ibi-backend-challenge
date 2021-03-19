@@ -4,11 +4,15 @@ import com.neliolucas._2ibi.countryapi.models.Country;
 import com.neliolucas._2ibi.countryapi.services.CountryService;
 import com.neliolucas._2ibi.countryapi.utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.logging.Logger;
+
+/**
+ * @author Nelio
+ * @date 18/03/2021
+ */
 
 @Configuration
 public class DbConfig {

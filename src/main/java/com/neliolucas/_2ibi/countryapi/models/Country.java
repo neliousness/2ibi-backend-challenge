@@ -6,6 +6,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
+/**
+ * @author Nelio
+ * @date 18/03/2021
+ */
+
 @Entity
 @Table(name = "COUNTRIES")
 public class Country {

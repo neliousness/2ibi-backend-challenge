@@ -6,6 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
+/**
+ * @author Nelio
+ * @date 18/03/2021
+ */
 
 public interface CountryRepository extends JpaRepository<Country,Long> {
 

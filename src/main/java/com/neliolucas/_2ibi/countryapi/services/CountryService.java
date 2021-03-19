@@ -10,6 +10,12 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+
+/**
+ * @author Nelio
+ * @date 18/03/2021
+ */
+
 @Service
 @Transactional
 public class CountryService {
@@ -23,11 +29,13 @@ public class CountryService {
             if (countryRepository.findByName(country.getName()) == null) {
                 countryRepository.save(country);
 
+                Helper.log(this.getClass(),country.getName() + " added");
                 return countryRepository.findByName(country.getName()) != null;
             }
-
+            Helper.log(this.getClass(),country.getName() + " already exists");
             return false;
         }
+        Helper.log(this.getClass(),country.getName() + " is not valid");
         return false;
     }
 
@@ -37,6 +45,7 @@ public class CountryService {
         {
             countryRepository.deleteById(uid);
 
+            Helper.log(this.getClass(),"Country deleted");
             return !countryRepository.findById(uid).isPresent();
         }
 
