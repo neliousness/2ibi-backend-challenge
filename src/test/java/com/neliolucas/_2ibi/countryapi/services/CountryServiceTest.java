@@ -191,6 +191,7 @@ public class CountryServiceTest {
         assertThat(countryService.findById(0L),equalTo(null));
     }
 
+
     @Test
     public void sortCountriesByCapital_returnSortedListByCapital()
     {

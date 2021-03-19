@@ -481,7 +481,7 @@ public class CountryResourceIntegrationTest {
         //when
         when(countryService.findById(0)).thenReturn(alaska);
 
-        mockMvc.perform(get("/api/country/0")
+        mockMvc.perform(get("/api/country/id/0")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isFound())
                 .andExpect(content().string(containsString("Alaska")));
@@ -495,7 +495,41 @@ public class CountryResourceIntegrationTest {
         //when
         when(countryService.findById(0)).thenReturn(null);
 
-        mockMvc.perform(get("/api/country/0")
+        mockMvc.perform(get("/api/country/id/0")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void fetchSingleCountryByValidName_returnResponseIsFound() throws Exception {
+        Country alaska = new Country();
+        alaska.setUid(0L);
+        alaska.setName("Alaska");
+        alaska.setArea(1717856);
+        alaska.setCapital("Juneau");
+        alaska.setRegion("America");
+        alaska.setSubRegion("Northwest America");
+
+
+        //when
+        when(countryService.findByName(alaska.getName())).thenReturn(alaska);
+
+        mockMvc.perform(get("/api/country/name/"+alaska.getName())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isFound())
+                .andExpect(content().string(containsString("Alaska")));
+
+    }
+
+    @Test
+    public void fetchSingleCountryByInvalidName_returnResponseNotFound() throws Exception {
+
+
+        //when
+        when(countryService.findByName("United Kingdom")).thenReturn(null);
+
+        mockMvc.perform(get("/api/country/name/United Kingdom")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
 

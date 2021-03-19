@@ -67,12 +67,25 @@ public class CountryResource {
      * @param id country ID
      * @return returns Http Status FOUND and response body of type country or HTTP status NOT FOUND
      */
-    @GetMapping("/country/{id}")
-    public ResponseEntity<?> fetchSingleCountry(@PathVariable("id") long id) {
+    @GetMapping("/country/id/{id}")
+    public ResponseEntity<?> fetchSingleCountryById(@PathVariable("id") long id) {
         Country foundCountry = countryService.findById(id);
         return foundCountry != null ?
                 ResponseEntity.status(HttpStatus.FOUND).body(foundCountry) :
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body("No country with id '" + id + "' found");
+    }
+
+    /**
+     * Fetches a single country by Name
+     * @param name country ID
+     * @return returns Http Status FOUND and response body of type country or HTTP status NOT FOUND
+     */
+    @GetMapping("/country/name/{name}")
+    public ResponseEntity<?> fetchSingleCountryName(@PathVariable("name") String name) {
+        Country foundCountry = countryService.findByName(name);
+        return foundCountry != null ?
+                ResponseEntity.status(HttpStatus.FOUND).body(foundCountry) :
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body("No country named '" + name + "' found");
     }
 
 
