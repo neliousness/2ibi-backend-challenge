@@ -1,4 +1,4 @@
-package com.neliolucas._2ibi.countryapi.api;
+package com.neliolucas._2ibi.countryapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
