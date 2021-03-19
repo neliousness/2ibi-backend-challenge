@@ -19,13 +19,15 @@ public class CountryService {
 
     public boolean addCountry(Country country)
     {
-        if (countryRepository.findByName(country.getName()) == null)
-        {
-            countryRepository.save(country);
+        if (country.isCountryValid()) {
+            if (countryRepository.findByName(country.getName()) == null) {
+                countryRepository.save(country);
 
-            return countryRepository.findByName(country.getName()) != null;
+                return countryRepository.findByName(country.getName()) != null;
+            }
+
+            return false;
         }
-
         return false;
     }
 

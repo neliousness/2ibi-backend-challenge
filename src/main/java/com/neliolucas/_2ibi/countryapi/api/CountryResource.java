@@ -5,9 +5,14 @@ import com.neliolucas._2ibi.countryapi.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -24,7 +29,7 @@ public class CountryResource {
      * @return request CREATED or CONFLICT request response with a response body of type String
      */
     @PostMapping("/country")
-    public ResponseEntity<?> addCountry(@RequestBody Country country) {
+    public ResponseEntity<?> addCountry(@Valid @RequestBody Country country) {
 
             return countryService.addCountry(country) ?
                     ResponseEntity.status(HttpStatus.CREATED).body("Country '" + country.getName() + " added") :
@@ -65,6 +70,19 @@ public class CountryResource {
         return countryService.update(id, country) ?
                 ResponseEntity.ok().body("Country '" + country.getName() + "' updated") :
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body("No changes in country '" + country.getName() + "' found");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 
 }

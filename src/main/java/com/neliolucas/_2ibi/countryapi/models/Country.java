@@ -3,6 +3,7 @@ package com.neliolucas._2ibi.countryapi.models;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
@@ -15,18 +16,22 @@ public class Country {
 
     @Column(nullable = false)
     @NotNull
+    @NotBlank(message = "name is mandatory")
     private String name;
 
     @Column(nullable = false)
     @NotNull
+    @NotBlank(message = "capital is mandatory")
     private String capital;
 
     @Column(nullable = false)
     @NotNull
+    @NotBlank(message = "region is mandatory")
     private String region;
 
     @Column(nullable = false)
     @NotNull
+    @NotBlank(message = "subRegion is mandatory")
     private String subRegion;
 
     @Column(nullable = false)
@@ -88,6 +93,11 @@ public class Country {
         this.region = country.getRegion();
         this.subRegion = country.getSubRegion();
         this.area = country.getArea();
+    }
+
+    public boolean isCountryValid()
+    {
+        return name != null && capital != null && region != null && subRegion != null && area > 0;
     }
 
     @Override

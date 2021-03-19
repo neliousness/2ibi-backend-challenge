@@ -4,28 +4,22 @@ package com.neliolucas._2ibi.countryapi.api;
 import com.google.gson.Gson;
 import com.neliolucas._2ibi.countryapi.models.Country;
 import com.neliolucas._2ibi.countryapi.services.CountryService;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.*;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -44,7 +38,7 @@ public class CountryResourceIntegrationTest {
 
 
     @Test
-    public void fetchAllCountries() throws Exception {
+    public void testFetchAllCountries_returnCountryList() throws Exception {
 
         Country moz = new Country();
         moz.setName("Mozambique");
@@ -157,7 +151,9 @@ public class CountryResourceIntegrationTest {
         alaska.setRegion("America");
         alaska.setSubRegion("Northwest America");
 
-        List<Country> countriesSortedByCapital = Arrays.asList(china,germany,alaska,moz,usa);
+        List<Country> countriesSortedByCapital = Stream.of(usa,germany,china,alaska,moz)
+                .sorted(Comparator.comparing(Country::getCapital))
+                .collect(Collectors.toList());
 
         when(countryService.findAndSortAllByProperty("capital")).thenReturn(countriesSortedByCapital);
 
@@ -196,7 +192,8 @@ public class CountryResourceIntegrationTest {
     @Test
     public void deleteCountry() throws Exception {
         when(countryService.deleteCountry(4L)).thenReturn(true);
-        mockMvc.perform(delete("/api/country/4").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/api/country/4")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
     }
