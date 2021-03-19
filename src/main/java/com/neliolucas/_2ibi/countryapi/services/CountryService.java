@@ -25,7 +25,7 @@ public class CountryService {
 
     public boolean addCountry(Country country)
     {
-        if (country.isCountryValid()) {
+        if (country.validCountry()) {
             if (countryRepository.findByName(country.getName()) == null) {
                 countryRepository.save(country);
 
@@ -48,6 +48,7 @@ public class CountryService {
             Helper.log(this.getClass(),"Country deleted");
             return !countryRepository.findById(uid).isPresent();
         }
+        Helper.log(this.getClass(),"Unable to delete. Country not found");
 
         return false;
     }

@@ -1,6 +1,7 @@
 package com.neliolucas._2ibi.countryapi.models;
 
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,32 +16,39 @@ import java.util.Objects;
 @Table(name = "COUNTRIES")
 public class Country {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty(required = false, hidden = true)
     private long uid;
 
     @Column(nullable = false)
     @NotNull
     @NotBlank(message = "name is mandatory")
+    @ApiModelProperty(value = "name", name = "name", dataType = "String", example = "South Africa")
     private String name;
 
     @Column(nullable = false)
     @NotNull
     @NotBlank(message = "capital is mandatory")
+    @ApiModelProperty(value = "capital", name = "capital", dataType = "String", example = "Pretoria")
     private String capital;
 
     @Column(nullable = false)
     @NotNull
     @NotBlank(message = "region is mandatory")
+    @ApiModelProperty(value = "region", name = "region", dataType = "String", example = "Africa")
     private String region;
 
     @Column(nullable = false)
     @NotNull
     @NotBlank(message = "subRegion is mandatory")
+    @ApiModelProperty(value = "subRegion", name = "subRegion", dataType = "String", example = "Southern Africa")
     private String subRegion;
 
     @Column(nullable = false)
     @NotNull
+    @ApiModelProperty(value = "area", name = "area", dataType = "double", example = "1221037")
     private double area;
 
     public long getUid() {
@@ -100,7 +108,7 @@ public class Country {
         this.area = country.getArea();
     }
 
-    public boolean isCountryValid()
+    public boolean validCountry()
     {
         return name != null && capital != null && region != null && subRegion != null && area > 0;
     }
