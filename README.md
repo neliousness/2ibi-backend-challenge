@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 2ibi-backend-challenge
 Country Restful API 
 =======
@@ -57,4 +56,3 @@ API usage with detailed examples can be can be found at https://countryrestapi2i
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
->>>>>>> b79e6881a162f4f78ce3e34c61f22bb895e022da
