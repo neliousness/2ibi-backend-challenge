@@ -28,7 +28,7 @@ This projects makes use an embbed in memory database, particularly  H2 Database
 
 
 ## API
-The API url is https://countryrestapi2ibi.herokuapp.com and can be used to access the following endpoints :
+The API base URL is https://countryrestapi2ibi.herokuapp.com and can be used to access the following endpoints :
 
 ### addCountry (POST)
 - endpoint - /api/country
