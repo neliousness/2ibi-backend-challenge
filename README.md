@@ -1,6 +1,3 @@
-# 2ibi-backend-challenge
-Country Restful API 
-=======
 
 # Country Restful API (programming challenge)
 
