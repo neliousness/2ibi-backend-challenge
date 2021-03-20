@@ -1,0 +1,6 @@
+com/neliolucas/_2ibi/countryapi/CountryapiApplicationTests.java
+ com.neliolucas._2ibi.countryapi.CountryapiApplicationTests
+com/neliolucas/_2ibi/countryapi/services/CountryServiceTest.java
+ com.neliolucas._2ibi.countryapi.services.CountryServiceTest
+com/neliolucas/_2ibi/countryapi/api/CountryResourceIntegrationTest.java
+ com.neliolucas._2ibi.countryapi.api.CountryResourceIntegrationTest
