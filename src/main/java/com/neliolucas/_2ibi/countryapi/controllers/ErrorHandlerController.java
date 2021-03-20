@@ -1,5 +1,8 @@
 package com.neliolucas._2ibi.countryapi.controllers;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import java.util.Map;
  * @date 19/03/2021
  */
 
+@Api(value = "ErrorHandlerController")
 @RestControllerAdvice
 public class ErrorHandlerController{
 
@@ -25,9 +29,11 @@ public class ErrorHandlerController{
      * @param ex
      * @return retuens error message
      */
+    @ApiOperation(value = "Handles invalid country request body for /api/country POST and PUT methods", tags = "handleValidationExceptions")
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
+    @ApiResponse(code = 400, message = "bad request")
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -35,12 +41,12 @@ public class ErrorHandlerController{
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        return errors;
+        return   ResponseEntity.badRequest().body(errors);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(PropertyReferenceException.class)
-    public ResponseEntity<?> handleSortingExceptions(
+    public ResponseEntity<Map<String, String>> handleSortingExceptions(
             PropertyReferenceException ex) {
         Map<String, String> errors = new HashMap<>();
         errors.put("error", "Invalid property");
