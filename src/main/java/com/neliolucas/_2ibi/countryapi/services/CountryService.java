@@ -29,13 +29,13 @@ public class CountryService {
             if (countryRepository.findByName(country.getName()) == null) {
                 countryRepository.save(country);
 
-                Helper.log(this.getClass(),country.getName() + " added");
+                Helper.logInfo(this,country.getName() + " added");
                 return countryRepository.findByName(country.getName()) != null;
             }
-            Helper.log(this.getClass(),country.getName() + " already exists");
+            Helper.logInfo(this,country.getName() + " already exists");
             return false;
         }
-        Helper.log(this.getClass(),country.getName() + " is not valid");
+        Helper.logInfo(this,country.getName() + " is not valid");
         return false;
     }
 
@@ -45,10 +45,10 @@ public class CountryService {
         {
             countryRepository.deleteById(uid);
 
-            Helper.log(this.getClass(),"Country deleted");
+            Helper.logInfo(this,"Country deleted");
             return !countryRepository.findById(uid).isPresent();
         }
-        Helper.log(this.getClass(),"Unable to delete. Country not found");
+        Helper.logInfo(this,"Unable to delete. Country not found");
 
         return false;
     }
@@ -61,19 +61,19 @@ public class CountryService {
             if (foundCountry.hashCode() != country.hashCode()) {
                 foundCountry.updateCountry(country);
                 countryRepository.save(foundCountry);
-                Helper.log(this.getClass(),"Country '" + foundCountry.getName()+"' updated");
+                Helper.logInfo(this,"Country '" + foundCountry.getName()+"' updated");
                 return true;
             }
             else
             {
-                Helper.log(this.getClass(),"No changes for country '" + foundCountry.getName()+"'");
+                Helper.logInfo(this,"No changes for country '" + foundCountry.getName()+"'");
                 return false;
             }
 
         }
         else
         {
-            Helper.log(this.getClass(),"Country with id '" + id+"' does not exist");
+            Helper.logInfo(this,"Country with id '" + id+"' does not exist");
             return false;
         }
     }
