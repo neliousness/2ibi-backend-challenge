@@ -63,27 +63,27 @@ public class DbConfig {
 
         if(countryService.addCountry(moz))
         {
-            Helper.log(this.getClass(),"Country "+ moz.getName() + " added");
+            Helper.logInfo(this,"Country "+ moz.getName() + " added");
         }
 
         if(countryService.addCountry(usa))
         {
-            Helper.log(this.getClass(),"Country "+ usa.getName() + " added");
+            Helper.logInfo(this,"Country "+ usa.getName() + " added");
         }
 
         if(countryService.addCountry(china))
         {
-            Helper.log(this.getClass(),"Country "+ china.getName() + " added");
+            Helper.logInfo(this,"Country "+ china.getName() + " added");
         }
 
         if(countryService.addCountry(germany))
         {
-            Helper.log(this.getClass(),"Country "+ germany.getName() + " added");
+            Helper.logInfo(this,"Country "+ germany.getName() + " added");
         }
 
         if(countryService.addCountry(alaska))
         {
-            Helper.log(this.getClass(),"Country "+ alaska.getName() + " added");
+            Helper.logInfo(this,"Country "+ alaska.getName() + " added");
         }
 
     }
